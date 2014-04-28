@@ -113,6 +113,11 @@ KeychainAccess.prototype.setPassword = function(opts, fn) {
 
   var spawnArgs = [ 'add-'+opts.type+'-password', '-a', opts.account, '-s', opts.service, '-w', opts.password ];
 
+  if (opts.label) {
+    spawnArgs.push('-l');
+    spawnArgs.push(opts.label);
+  }
+
   if (opts.comments) {
     spawnArgs.push('-j');
     spawnArgs.push(opts.comments);
