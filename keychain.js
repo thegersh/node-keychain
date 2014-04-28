@@ -111,7 +111,14 @@ KeychainAccess.prototype.setPassword = function(opts, fn) {
     return;
   }
 
-  var security = spawn(this.executablePath, [ 'add-'+opts.type+'-password', '-a', opts.account, '-s', opts.service, '-w', opts.password ]);
+  var spawnArgs = [ 'add-'+opts.type+'-password', '-a', opts.account, '-s', opts.service, '-w', opts.password ];
+
+  if (opts.comments) {
+    spawnArgs.push('-j');
+    spawnArgs.push(opts.comments);
+  }
+
+  var security = spawn(this.executablePath, spawnArgs);
   var self = this;
 
   security.on('exit', function(code, signal) {
